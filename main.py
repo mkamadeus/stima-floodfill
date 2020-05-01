@@ -3,22 +3,29 @@ import numpy as np
 import operator
 import random
 
-image = cv2.imread('./images/gradient_small.jpg')
+image = cv2.imread('./images/checkerboard.jpg')
 rows, cols, _ = image.shape
-tolerance = 128
-sampling_radius = 1
+tolerance = 0
+sampling_radius = 0
 
 
 def is_pixel_valid(r, c):
     return (r >= 0 and c >= 0 and r < rows and c < cols)
 
 
+def generate_color(prev_color):
+    red, green, blue = (random.randint(0, 255) + prev_color[0])/2, (random.randint(
+        0, 255) + prev_color[1])/2, (random.randint(0, 255) + prev_color[2])/2
+
+    return [red, green, blue]
+
+
 print('Image size:', str(rows) + ", " + str(cols))
 print('Tolerance:', tolerance)
+print('Sampling Radius:', sampling_radius)
 
 # BFS Algorithm
 visited = [[False for j in range(cols)] for i in range(rows)]
-
 
 starting_pixel = (0, 127)
 sample_average_list = np.asarray([])
@@ -38,6 +45,11 @@ queue.append(starting_pixel)
 
 directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
+prev_color = [0, 0, 255]
+cv2.namedWindow('Result', cv2.WINDOW_NORMAL)
+cv2.resizeWindow('Result', 900, 900)
+cv2.imshow('Result', image)
+cv2.waitKey(0)
 while(len(queue) != 0):
     found = False
     current_pixel = queue.pop(0)
@@ -50,16 +62,12 @@ while(len(queue) != 0):
                 queue.append(new_pixel)
                 visited[new_pixel[0]][new_pixel[1]] = True
 
-    image[current_pixel] = [random.randint(
-        0, 255), random.randint(0, 255), random.randint(0, 255)]
+    image[current_pixel] = [0, 0, 200]
+    cv2.imshow('Result', image)
+    cv2.waitKey(1)
 
-
+print('Floodfill complete!')
 cv2.imshow('Result', image)
 cv2.waitKey(0)
 
 # cv2.imwrite('./result/gradient_small_128.jpg', image)
-
-# for i in range(rows):
-# 	for j in range(cols):
-# 		print(image[i,j], end='')
-# 	print()
