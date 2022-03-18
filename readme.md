@@ -4,6 +4,12 @@
 
 This project was made to test the use of flood fill algorithms for making paint bucket tool simulation. Paint bucket is a tool that is highly available on all generic image processing softwares (even Microsoft Paint has it).
 
+## Demonstration Video
+
+[![video](https://img.youtube.com/vi/xVTS6NxGv_4/0.jpg)](https://www.youtube.com/watch?v=xVTS6NxGv_4)
+
+*coughs in one of the best project in the semester chosenby lecturers*
+
 ## Prerequisites
 
 Having Python 3 with OpenCV installed.
